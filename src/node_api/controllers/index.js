@@ -1,7 +1,9 @@
-async function get(req, res, next) {
+const userController = require("./user");
+async function indexGet(req, res, next) {
   res.send("Hello World!");
 }
 
 module.exports = {
-  get,
+  get: indexGet,
+  userController,
 };

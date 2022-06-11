@@ -2,19 +2,21 @@ const express = require("express");
 
 const useRouter = express.Router();
 
-const {
-  authenticate,
-  register,
-  getById,
-  getCurrent,
-  authenticateSchema,
-  registerSchema,
-} = require("../controllers/user");
+const { userController } = require("../controllers");
+
 const authorize = require("../middlewares/authorize");
 
-useRouter.post("/authenticate", authenticateSchema, authenticate);
-useRouter.post("/register", registerSchema, register);
-useRouter.get("/current", authorize(), getCurrent);
-useRouter.get("/:id", authorize(), getById);
+useRouter.post(
+  "/authenticate",
+  userController.authenticateSchema,
+  userController.authenticate
+);
+useRouter.post(
+  "/register",
+  userController.registerSchema,
+  userController.register
+);
+useRouter.get("/current", authorize(), userController.getCurrent);
+useRouter.get("/:id", authorize(), userController.getById);
 
 module.exports = useRouter;
