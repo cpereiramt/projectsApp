@@ -19,6 +19,7 @@ function userModel(sequelize) {
       withHash: { attributes: {} },
     },
   };
-
+  
+  
   return sequelize.define("User", attributes, options);
 }
