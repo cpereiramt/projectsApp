@@ -11,7 +11,7 @@ function taskModel(sequelize) {
     },
     description: { type: DataTypes.STRING, allowNull: false },
     creationDate: { type: DataTypes.DATE, allowNull: false },
-    finishDate: { type: DataTypes.DATE, allowNull: false },
+    finishDate: { type: DataTypes.DATE, allowNull: true, defaultValue: null },
   };
 
   const options = {};

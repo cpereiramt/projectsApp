@@ -26,8 +26,10 @@ function getAllProjectsByUser(req, res, next) {
     .catch(next);
 }
 function update(req, res, next) {
+  req.params.userId = req.auth.sub;
+
   projectService
-    .update(req.params.id, req.body)
+    .update(req.params.id, req.body, req.params.userId)
     .then((project) => res.json(project))
     .catch(next);
 }

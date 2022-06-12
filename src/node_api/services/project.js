@@ -20,10 +20,8 @@ async function create(params) {
 
 async function _delete(id, userId) {
   const project = await db.Project.findByPk(id);
-  // check if project belongs to user many to many relationship
 
   if (!project) throw "Project not found";
-  // await project.destroy();
   await project
     .getUsers()
     .then((users) => {
@@ -46,9 +44,22 @@ async function getAllProjectsByUser(userId) {
   return projects;
 }
 
-async function update(id, params) {
+async function update(id, params, userId) {
   const project = await db.Project.findByPk(id);
   if (!project) throw "Project not found";
-  await project.update(params);
+  await project
+    .getUsers()
+    .then((users) => {
+      if (userId === users[0].dataValues.userID) {
+        project.update(params);
+      }
+      if (userId !== users[0].dataValues.userID) {
+        throw "Project not found for this user";
+      }
+    })
+    .catch((err) => {
+      throw err;
+    });
+
   return project;
 }
