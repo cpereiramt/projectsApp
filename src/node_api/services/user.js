@@ -35,22 +35,16 @@ async function getById(id) {
 }
 
 async function create(params) {
-  // validate
   if (await db.User.findOne({ where: { email: params.email } })) {
     throw 'Email"' + params.email + '" is already registred for another user';
   }
 
-  // hash password
   if (params.password) {
     params.hash = await bcrypt.hash(params.password, 10);
     console.log(params);
   }
-
-  // save user
   await db.User.create(params);
 }
-
-// helper functions
 
 async function getUser(id) {
   const user = await db.User.findByPk(id);
